@@ -61,6 +61,9 @@ void ZenohChannelBackend::Start() {
 void ZenohChannelBackend::Shutdown() {
   if (std::atomic_exchange(&state_, State::kShutdown) == State::kShutdown)
     return;
+
+  if (zenoh_manager_ptr_)
+    zenoh_manager_ptr_->Shutdown();
 }
 
 bool ZenohChannelBackend::RegisterPublishType(
